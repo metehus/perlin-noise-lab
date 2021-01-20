@@ -1,12 +1,11 @@
-const {noise, noiseDetail, noiseSeed} = require('./noise')
+const {noise, noiseDetail, noiseSeed} = require('../noise')
 const { createCanvas, loadImage } = require('canvas')
 const express = require('express')
 const chroma = require('chroma-js')
 const app = express()
-const port = 3000
 
 
-app.get('/', (req, res) => {
+module.exports = (req, res) => {
   noiseSeed(Math.random() * Math.PI)
   const w = Number(req.query.width) || 200
   const h = Number(req.query.height) || 200
@@ -52,8 +51,4 @@ app.get('/', (req, res) => {
   res.setHeader('Content-Type', 'image/png')
   canvas.createJPEGStream().pipe(res)
 
-})
-
-app.listen(port, () => {
-  console.log(`App running at http://localhost:${port}`)
-})
+}
